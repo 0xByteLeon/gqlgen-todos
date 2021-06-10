@@ -7,23 +7,12 @@ import (
 	"context"
 
 	"github.com/leon/gqlgen-todos/graph/model"
-	pkgModel "github.com/leon/gqlgen-todos/pkg/model"
 )
 
 func (r *mutationResolver) Register(ctx context.Context, userName string) (*model.User, error) {
 	return r.UserRepo.Register(ctx, userName)
 }
 
-func (r *queryResolver) QueryTodosByUserID(ctx context.Context, userID string) ([]*pkgModel.Todo, error) {
-	user, err := r.UserRepo.GetUserByID(ctx, userID)
-	if err != nil {
-		return nil, err
-	}
-
-	todos, err := r.TodoRepo.QueryTodos(ctx, user.ID)
-	if err != nil {
-		return nil, err
-	}
-
-	return todos, nil
+func (r *queryResolver) GetUserByID(ctx context.Context, userID string) (*model.User, error) {
+	return r.UserRepo.GetUserByID(ctx, userID)
 }

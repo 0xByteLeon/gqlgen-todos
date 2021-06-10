@@ -2,9 +2,23 @@
 
 package model
 
+import (
+	"github.com/leon/gqlgen-todos/pkg/model"
+)
+
+type Error struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
 type NewTodo struct {
 	Text   string `json:"text"`
 	UserID string `json:"userId"`
+}
+
+type NewTodoResponse struct {
+	Error *Error      `json:"error"`
+	Todo  *model.Todo `json:"todo"`
 }
 
 type User struct {

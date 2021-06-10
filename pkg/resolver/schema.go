@@ -5,25 +5,13 @@ package resolver
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/google/uuid"
-	graph "github.com/leon/gqlgen-todos/graph/model"
 	"github.com/leon/gqlgen-todos/pkg/generated"
-	pkg "github.com/leon/gqlgen-todos/pkg/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input graph.NewTodo) (*pkg.Todo, error) {
-	user, err := r.UserRepo.GetUserByID(ctx, input.UserID)
-	if err != nil {
-		return nil, err
-	}
-	todo := pkg.Todo{
-		ID:     uuid.New().String(),
-		Text:   input.Text,
-		Done:   false,
-		UserID: user.ID,
-	}
-	return &todo, nil
+func (r *mutationResolver) Empty(ctx context.Context) (string, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) Empty(ctx context.Context) (string, error) {

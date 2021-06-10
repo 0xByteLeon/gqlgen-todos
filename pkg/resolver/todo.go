@@ -11,6 +11,34 @@ import (
 	"github.com/leon/gqlgen-todos/pkg/model"
 )
 
+func (r *mutationResolver) CreateTodo(ctx context.Context, input model1.NewTodo) (*model1.NewTodoResponse, error) {
+	_, err := r.UserRepo.GetUserByID(ctx, input.UserID)
+	if err != nil {
+		return &model1.NewTodoResponse{
+			Error: marshalError(err),
+		}, nil
+	}
+	todo, err := r.TodoRepo.CreateTodo(ctx, input)
+	return &model1.NewTodoResponse{
+		Error: nil,
+		Todo:  todo,
+	}, nil
+}
+
+func (r *queryResolver) QueryTodosByUserID(ctx context.Context, userID string) ([]*model.Todo, error) {
+	user, err := r.UserRepo.GetUserByID(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	todos, err := r.TodoRepo.QueryTodos(ctx, user.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return todos, nil
+}
+
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model1.User, error) {
 	return r.UserRepo.GetUserByID(ctx, obj.UserID)
 }

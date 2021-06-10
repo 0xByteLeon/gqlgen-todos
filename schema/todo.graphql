@@ -9,3 +9,16 @@ input NewTodo {
     text: String!
     userId: String!
 }
+
+type NewTodoResponse {
+    error:Error
+    todo:Todo
+}
+
+extend type Mutation {
+    createTodo(input: NewTodo!): NewTodoResponse!
+}
+
+extend type Query {
+    queryTodosByUserID(userID:String!):[Todo!]!
+}

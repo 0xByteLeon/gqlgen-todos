@@ -5,7 +5,7 @@ type User {
 }
 
 extend type Query {
-    queryTodosByUserID(userID:String!):[Todo!]!
+    getUserByID(userID:String!):User!
 }
 
 extend type Mutation {

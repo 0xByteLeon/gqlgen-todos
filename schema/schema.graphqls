@@ -2,10 +2,15 @@
 #
 # https://gqlgen.com/getting-started/
 
+type Error {
+  code: Int!
+  message: String!
+}
+
 type Query {
   empty: String!
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  empty: String!
 }
